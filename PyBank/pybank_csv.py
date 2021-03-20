@@ -2,32 +2,112 @@ import os
 import csv
 
 csvpath = os.path.join('..', 'PyBank', 'budget_data.csv')
+
+
+def PL_Bank(data):
+
+    # Variables
+    Months_Amount = 0
+    Profit = 0
+    Months = []
+    Total_Profit = 0
+    Difference = 0
+    Total_Difference = []
     
-
-with open('budget_data.csv', 'r') as csvfile:
-    csv_reader = csv.Dictreader(csvfile, delimiter=',') 
-    total = []
-    for row_count, row in enumerate(csvreader, start=1)
-        value = int(row['Profit/Losses'])
-        totals.append(value)    
-
-print("Financial Analysis")
-print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")
-print("Total Months: {}".format(row_count))
-print("Total: {}".format(sum(totals)))
-print("Average Change: ")
-print("Greatest Increase in Profits: ")
-print("Greatest Decrease in Profits: ")
+    # Loop
+    for row in data:
+       
+        # + 1
+        Months_Amount += 1
         
+        # Total_Profit total
+        Total_Profit += int(row[1])
+        
+        # Months total
+        Months.append(str(row[0]))
+        
+        if Difference != 0:
+            
+            # First Profit 
+            Profit = int(row[1])
+            
+            # Difderence, new vs old
+            Difference = Profit - Difference
+            
+            # Store Difference 
+            Total_Difference.append(Difference)
+            
+            # Reset
+            Difference = int(row[1])
+            
+        # Else value = 0
+        elif Difference == 0:
+            Difference = int(row[1])  
+            
+    # No Difference first month
+    Months.pop(0)
+    
+    # Find Greatest Increase and
+    Greatest_Increase = Total_Difference.index(max(Total_Difference))
+    Greatest_Decrease = Total_Difference.index(min(Total_Difference))
 
-output_path = os.path.join("Analysis.txt")    
+    # Find Months
+    Increase_Difference = (Months[int(Greatest_Increase)], max(Total_Difference))
+    Decrease_Difference = (Months[int(Greatest_Decrease)], min(Total_Difference))
+    
+# Find mean of total difference
+    Mean = sum(Total_Difference)/float(len(Total_Difference))
+    Mean = round(Mean,2)
+    
+    # print the results
+    print(f'Financial Analysis')
+    print(f'-------------------------------------------')
+    print(f'Total Months: {Months_Amount}')
+    print(f'Net Profit: {Total_Profit}')
+    print(f'Average Monthly Change: {Mean}')
+    print(f'Greatest Increase in Profits: {Increase_Difference}')
+    print(f'Greatest Loss In Profits: {Decrease_Difference}')
 
-with open(output_file, 'w', newline='') as text_file:
-    text_file.write("Financial Analysis\n")
-    text_file.write("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
-    text_file.write("Total Months: {}\n".format(row_count))
-    text_file.write("Average: {}\n")
-    text_file.write("Greatest Increase in Profits: {}\n")
-    text_file.write("Greastest Decrease in Profits: {}\n")
+    # Text
+    with open(Analysistxt, 'w') as txtfile:
+        txtfile.write('Financial Analysis')
+        txtfile.write('\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _')
+        txtfile.write(f'\nTotal Months: {Months_Amount}')
+        txtfile.write(f'\nNet Profit: {Total_Profit}')
+        txtfile.write(f'\nAverage Monthly Change: {Mean}')
+        txtfile.write(f'\nGreatest Increase In Profits: {Increase_Difference}')
+        txtfile.write(f'\nGreatest Loss In Profits: {Decrease_Difference}')
 
-  
+# Method 2: Improved Reading using CSV module
+
+with open(csvpath) as csvfile:
+
+    # CSV reader specifies delimiter and variable that holds contents
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    print(csvreader)
+
+    # Read the header row first (skip this step if there is now header)
+    csv_header = next(csvfile)
+    Bank_Analysis(csvreader)
+    print(f"CSV Header: {csv_header}")
+
+    # Specify the file to write to
+output_path = os.path.join("..", "output", "analysis.csv")
+
+# Open the file using "write" mode. Specify the variable to hold the contents
+with open(output_path, 'w', newline='') as csvfile:
+
+    # Initialize csv.writer
+    csvwriter = csv.writer(csvfile, delimiter=',')
+
+    # Write the first row (column headers)
+    csvwriter.writerow(['Financial Analysis'])
+
+    # Write the second row
+    csvwriter.writerow([f'\nTotal Month: {Months_Amount}'])
+    csvwriter.writerow([f'\nNet Profit: {Total_Profit}'])
+    csvwriter.writerow([f'\nAverage Monthly Change: {Mean}'])
+    csvwriter.writerow([f'\nGreatest Increase In Profits: {Increase_Difference}'])
+    csvwriter.writerow([f'\nGreastest Loss In Profits: {Decrease_Difference}'])
+
