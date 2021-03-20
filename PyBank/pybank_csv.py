@@ -8,14 +8,26 @@ with open(csvpath, 'r') as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
 
    
-output_path = os.path.join(",", "output", "budget_data.csv")
+output_path = os.path.join("..", "PyBank", "analysis.csv")
 
 with open(output_path, 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
 
     csvwriter.writerow(['text'])
-    print(writerow)
-
+    
     csvwriter.writerow(['Financial_Analysis'])
-    print(writerow)
 
+print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _')
+
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+
+    csvwriter.writerow(['Total Months:'])
+
+    csvwriter.writerow(['Total:'])
+
+    csvwriter.writerow(['Average Change:'])
+
+    csvwriter.writerow(['Greates Increase in Profits:'])
+
+     csvwriter.writerow(['Greatest Decrease in Profits:'])
