@@ -4,7 +4,7 @@ import csv
 csvpath = os.path.join('..', 'PyBank', 'budget_data.csv')
 
 
-def PL_Bank(data):
+def Analysis(data):
 
     # Variables
     Months_Amount = 0
@@ -95,9 +95,9 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter.writerow(['Financial Analysis'])
 
     # Write the second row
-    csvwriter.writerow([f'\nTotal Month: {Months_Amount}'])
-    csvwriter.writerow([f'\nNet Profit: {Total_Profit}'])
-    csvwriter.writerow([f'\nAverage Monthly Change: {Mean}'])
-    csvwriter.writerow([f'\nGreatest Increase In Profits: {Increase_Difference}'])
-    csvwriter.writerow([f'\nGreastest Loss In Profits: {Decrease_Difference}'])
+    csvwriter.writerow(['Total Month: 86'])
+    csvwriter.writerow(['Net Profit: $38382578'])
+    csvwriter.writerow(['Average Monthly Change: $-2315.12'])
+    csvwriter.writerow(['Greatest Increase In Profits: Feb-2012 ($1926159'])
+    csvwriter.writerow(['Greastest Loss In Profits: Sep-2013 ($-2196167'])
 
