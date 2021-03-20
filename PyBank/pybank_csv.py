@@ -68,16 +68,6 @@ def PL_Bank(data):
     print(f'Greatest Increase in Profits: {Increase_Difference}')
     print(f'Greatest Loss In Profits: {Decrease_Difference}')
 
-    # Text
-    with open(Analysistxt, 'w') as txtfile:
-        txtfile.write('Financial Analysis')
-        txtfile.write('\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _')
-        txtfile.write(f'\nTotal Months: {Months_Amount}')
-        txtfile.write(f'\nNet Profit: {Total_Profit}')
-        txtfile.write(f'\nAverage Monthly Change: {Mean}')
-        txtfile.write(f'\nGreatest Increase In Profits: {Increase_Difference}')
-        txtfile.write(f'\nGreatest Loss In Profits: {Decrease_Difference}')
-
 # Method 2: Improved Reading using CSV module
 
 with open(csvpath) as csvfile:
@@ -89,11 +79,11 @@ with open(csvpath) as csvfile:
 
     # Read the header row first (skip this step if there is now header)
     csv_header = next(csvfile)
-    Bank_Analysis(csvreader)
+    
     print(f"CSV Header: {csv_header}")
 
     # Specify the file to write to
-output_path = os.path.join("..", "output", "analysis.csv")
+output_path = os.path.join("..", "PyBank", "analysis.csv")
 
 # Open the file using "write" mode. Specify the variable to hold the contents
 with open(output_path, 'w', newline='') as csvfile:
