@@ -3,6 +3,11 @@ import csv
 
 csvpath = os.path.join('..', 'PyBank', 'budget_data.csv')
 
+# with open(csvpath, 'r') as file_handler:
+#     lines = file_handler.read()
+#     print(lines)
+#     print(type(lines))
+
 
 def Analysis(data):
 
@@ -68,7 +73,6 @@ def Analysis(data):
     print(f'Greatest Increase in Profits: {Increase_Difference}')
     print(f'Greatest Loss In Profits: {Decrease_Difference}')
 
-# Method 2: Improved Reading using CSV module
 
 with open(csvpath) as csvfile:
 
