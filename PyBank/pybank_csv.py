@@ -42,3 +42,26 @@ print(f"Average Change: {round(sum(change_profit)/len(change_profit),2)}")
 print(f"Greatest Increase in Profits: {month_count[month_increase]} (${(str(increase))})")
 print(f"Greatest Decrease in Profits: {month_count[month_decrease]} (${(str(decrease))})")
 
+
+    # Specify the file to write to
+output_path = os.path.join("..", "PyBank", "analysis.csv")
+
+# Open the file using "write" mode. Specify the variable to hold the contents
+with open(output_path, 'w', newline='') as csvfile:
+
+    # Initialize csv.writer
+    csvwriter = csv.writer(csvfile, delimiter=',')
+
+    csvwriter.writerow("Financial Analysis")
+    csvwriter.writerow("\n")
+    csvwriter.writerow("------------------------")
+    csvwriter.writerow("\n")
+    csvwriter.writerow(f"Total Months:{len(month_count)}")
+    csvwriter.writerow("\n")
+    csvwriter.writerow(f"Total: ${sum(profit)}")
+    csvwriter.writerow("\n")
+    csvwriter.writerow(f"Average Change: {round(sum(change_profit)/len(change_profit),2)}")
+    csvwriter.writerow("\n")
+    csvwriter.writerow(f"Greatest Increase in Profits: {month_count[month_increase]} (${(str(increase))})")
+    csvwriter.writerow("\n")
+    csvwriter.writerow(f"Greatest Decrease in Profits: {month_count[month_decrease]} (${(str(decrease))})")
