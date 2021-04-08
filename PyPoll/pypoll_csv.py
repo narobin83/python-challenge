@@ -1,56 +1,13 @@
 import os
 import csv
 
-csvpath = os.path.join('..', 'PyBank', 'election_data.csv')
+csvpath = os.path.join('..'/'PyBank'/'election_data.csv')
 
-# with open(csvpath, 'r') as file_handler:
-#     lines = file_handler.read()
-#     print(lines)
-#     print(type(lines))
+poll = {}
 
-# Function
-def Poll(data):
+total_votes = 0
 
-    # Variables
-    TotalVotes = 0
-    Votes = []
-    Candidates = []
-    Unique_Candidates = []
-    Total_Percent = []
-     
-    # Loop
-    for row in data:
-
-        # Sum Votes
-        TotalVotes += 1
-
-        # Append Candidates
-        if row[2] not in Unique_Candidates:
-            Unique_Candidates.append(row[2])
-
-        # New List
-        Votes.append(row[2])
-
-    # Loop
-    for candidate in Unique_Candidates:
-        Candidates.append(Votes.count(candidate))
-        Total_Percent.append(round(Votes.count(candidate)/TotalVotes*100,3))
-
-    # Most Votes
-    Winner = Unique_Candidates[Candidates.index(max(Candidates))]
-    
-    # Print
-    print('Election Results')
-    print('--------------------------------')
-    print(f'Total Votes: {TotalVotes}')
-    print('--------------------------------')
-    for p in range(len(Unique_Candidates)):
-        print(f'{Unique_Candidates[p]}: {Total_Percent[p]}% {Candidates[p]}')
-    print('--------------------------------')
-    print(f'Winner: {Winner}')
-    print('--------------------------------')
-
-    with open(csvpath) as csvfile:
+with open(csvpath) as csvfile:
 
     # CSV reader specifies delimiter and variable that holds contents
         csvreader = csv.reader(csvfile, delimiter=',')
@@ -62,7 +19,33 @@ def Poll(data):
     
         print(f"CSV Header: {csv_header}")
 
-    # Specify the file to write to
+        for row in csvreader:
+         total_votes +=1
+        if row[2] in poll.keys():
+            poll[row[2]] = poll[row[2]] + 1
+        else:
+            poll[row[2]] = 1
+
+candidates =[]
+num_votes = []
+
+for key, value in poll.items():
+        candidates.append(key)
+        num_votes.append(value)
+
+vote_percent = []
+for n in num_votes:
+        vote_percent.append(round(n/total_votes*100, 3))
+
+clean_data = list(zip(candidates, num_votes, vote_percent))
+
+winner_list =[]
+for name in clean_data:
+    if max(num_votes) == name[1]:
+        winner_list.append(name[0])
+
+
+# Specify the file to write to
         output_path = os.path.join("..", "PyPoll", "election.csv")   
 
     # Open the file using "write" mode. Specify the variable to hold the contents
@@ -71,17 +54,14 @@ def Poll(data):
             # Initialize csv.writer
             csvwriter = csv.writer(csvfile, delimiter=',')
 
-            # Write the first row (column headers)
+            
             csvwriter.writerow(['Election Results'])
-
-            # Write the second row
             csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ -'])
-            csvwriter.writerow(['Total Votes: 3521001'])
+            csvwriter.writerow(['Total Votes:' + str(total_votes)])
             csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
-            csvwriter.writerow(['Khan: 63.000% (2218231)'])
-            csvwriter.writerow(['Correy: 20.000% (704200)'])
-            csvwriter.writerow(['Li: 14.000% (492940)']) 
-            csvwriter.writerow(['O Tooley: 3.000% (105630)'])
-            csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
-            csvwriter.writerow(['Winner: Khan'])
-            csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
+           
+            for entry in clean_data:
+                csvwriter.writerow(entry[0] + ":" + str(entry[2]) +'% (' + str(entry[1]) + ')\n')
+                csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
+                csvwriter.writerow(['Winner:'] + winner +
+                csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
