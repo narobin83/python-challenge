@@ -1,7 +1,7 @@
 import os
 import csv
 
-csvpath = os.path.join('..'/'PyBank'/'election_data.csv')
+csvpath = os.path.join("../PyBank/election_data.csv")
 
 poll = {}
 
@@ -40,28 +40,27 @@ for n in num_votes:
 clean_data = list(zip(candidates, num_votes, vote_percent))
 
 winner_list =[]
+
 for name in clean_data:
     if max(num_votes) == name[1]:
         winner_list.append(name[0])
 
+winner = winner_list[0]
+
+if len(winner_list) > 1:
+    for w in range(1, len(winner_list)):
+        winner = winner + ", " + winner_list[w]
 
 # Specify the file to write to
-        output_path = os.path.join("..", "PyPoll", "election.csv")   
+        output_path = os.path.join("..", "PyPoll", "election.txt")   
 
     # Open the file using "write" mode. Specify the variable to hold the contents
-        with open(output_path, 'w', newline='') as csvfile:
-
-            # Initialize csv.writer
-            csvwriter = csv.writer(csvfile, delimiter=',')
-
-            
-            csvwriter.writerow(['Election Results'])
-            csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ -'])
-            csvwriter.writerow(['Total Votes:' + str(total_votes)])
-            csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
-           
-            for entry in clean_data:
-                csvwriter.writerow(entry[0] + ":" + str(entry[2]) +'% (' + str(entry[1]) + ')\n')
-                csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
-                csvwriter.writerow(['Winner:'] + winner +
-                csvwriter.writerow(['_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ '])
+        with open(output_path, 'w', newline='') as txtfile:
+         txtfile.writelines('Election Results \n------------------------- \nTotal Votes: ' + str(total_votes) + 
+      '\n-------------------------\n')
+    for entry in clean_data:
+        txtfile.writelines(entry[0] + ": " + str(entry[2]) +'%  (' + str(entry[1]) + ')\n')
+    txtfile.writelines('------------------------- \nWinner: ' + winner + '\n-------------------------')
+  
+    with open(output_path, 'r') as readfile:
+            print(readfile.read()) 
